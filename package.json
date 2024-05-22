@@ -1,4 +1,8 @@
 {
+   "name": "typeorm-sample",
+   "version": "0.0.1",
+   "description": "Awesome project developed with TypeORM.",
+   "type": "commonjs",
    "dependencies": {
       "express": "^4.19.2",
       "pg": "^8.4.0",

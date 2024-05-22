@@ -1,20 +1,17 @@
+import "reflect-metadata";
 import { AppDataSource } from "./data-source"
-import { User } from "./entity/User"
+import express from "express";
+import { router as studentRouter } from "../src/routes/Student";
+
+const app = express();
+// Middleware to parse JSON bodies
+app.use(express.json());
+const port = 3000;
 
 AppDataSource.initialize().then(async () => {
+    app.use(studentRouter)
+    app.listen(port, () => {
+        console.log(`Server running on http://localhost:${port}`);
+    })
 
-    console.log("Inserting a new user into the database...")
-    const user = new User()
-    user.firstName = "Timber"
-    user.lastName = "Saw"
-    user.age = 25
-    await AppDataSource.manager.save(user)
-    console.log("Saved a new user with id: " + user.id)
-
-    console.log("Loading users from the database...")
-    const users = await AppDataSource.manager.find(User)
-    console.log("Loaded users: ", users)
-
-    console.log("Here you can setup and run express / fastify / any other framework.")
-
-}).catch(error => console.log(error))
+}).catch(error => console.log(error));
